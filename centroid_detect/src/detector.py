@@ -1,8 +1,5 @@
 #!/usr/bin/env python
-<<<<<<< HEAD
-# coding=utf-8
-=======
->>>>>>> 513c0938f85815884d01c90394148ed7bb15fdd9
+
 import numpy as np
 import rospy
 import cv2
@@ -13,28 +10,22 @@ import sys
 
 bridge = CvBridge()
 
-<<<<<<< HEAD
 def talker(cX, cY):
 	pub = rospy.Publisher('coordtopic', String, queue_size = 10)
 	
-	rate = rospy.Rate(0.3)
+	#rate = rospy.Rate(0.1)
 	
 	x_ = str(cX)
 	y_ = str(cY)
 	output_str = "Centroid Coordinates are: "+x_+" "+y_
 	pub.publish(output_str)
 	#rate.sleep()
-	
+
 
 def fun(ros_image):
 	print '.'
 	global bridge
-	# Convert ROS image to cv2 image using bridge object
-=======
-def fun(ros_image):
-	print 'Got an Image'
-	global bridge
->>>>>>> 513c0938f85815884d01c90394148ed7bb15fdd9
+
 	try:
 		cv_image = bridge.imgmsg_to_cv2(ros_image, "bgr8")
 	except CvBridgeError as e:
@@ -67,9 +58,9 @@ def fun(ros_image):
 	cv2.circle(cv_image, (cX, cY), 2, (255, 255, 255), -1)
 
 	cv2.imshow("Centroid", cv_image)
-<<<<<<< HEAD
+
 	
-	cv2.waitKey(1)
+	cv2.waitKey(10)
 	talker(cX, cY)
 	"""
 	if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -77,28 +68,16 @@ def fun(ros_image):
 		return 0
 	"""	
 
-def main(args):
-	rospy.init_node('centroid_detector', anonymous=True)
-	image = rospy.Subscriber("/magnus/camera/image_raw", Image, fun) 
-		
-=======
-	cv2.waitKey(0)
-
-
 
 def main(args):
 	rospy.init_node('centroid_detector', anonymous=True)
 	image_sub = rospy.Subscriber("/magnus/camera/image_raw", Image, fun) 
->>>>>>> 513c0938f85815884d01c90394148ed7bb15fdd9
+
 	try:
 		rospy.spin()
 	except KeyboardInterrupt:
 		print("Shutting Down")
-<<<<<<< HEAD
 		cv2.destroyAllWindows()
-=======
-	cv2.destroyAllWindows()
->>>>>>> 513c0938f85815884d01c90394148ed7bb15fdd9
 
 if __name__ == '__main__':
 	main(sys.argv)
